@@ -1,0 +1,58 @@
+syntax = "proto3";
+package item.price.trace;
+option go_package = "./bp";
+
+service ItemPriceService{
+  rpc GetItemInfoList (ItemInfoRequest) returns (ItemInfoResponse);
+  rpc GetItemPriceHistoryByItem(ItemPriceRequest) returns (ItemPriceResponse);
+  rpc AddItem (ItemOpRequest) returns (AddItemResponse);
+  rpc DeleteItem (ItemOpRequest) returns (DeleteItemResponse);
+}
+
+message ItemInfoRequest {
+  int64 user_id = 1;
+}
+
+message ItemPriceRequest {
+  int64 item_id = 1;
+  optional int64 end_time = 2;
+  optional int32 duration_in_minute = 3;
+}
+
+message ItemInfoResponse {
+  string message = 1;
+  int32 error_code = 2;
+  repeated ItemInfo item_info = 3;
+}
+
+message ItemInfo {
+  int64 item_id = 1;
+  string item_name =2;
+}
+
+message ItemPriceResponse {
+  string message = 1;
+  int32 error_code = 2;
+  repeated ItemPrice item_price = 3;
+}
+
+message ItemPrice {
+    int64 price = 1;
+    int64 timestamp = 2;
+  }
+
+message ItemOpRequest {
+  int64 item_id = 1;
+  string item_name = 2;
+  int64 user_id = 3;
+}
+
+message AddItemResponse {
+  string message = 1;
+  int32 error_code = 2;
+}
+
+message DeleteItemResponse {
+  string message = 1;
+  int32 error_code = 2;
+}
